@@ -8,6 +8,12 @@
   Объект после манипуляций следует вернуть в качестве результата работы функции.
 */
 export function personUpdate(data) {
+    if (data.gender == 'female') {
+        if (data.age != undefined) delete data.age;
+    } else {
+        if (data.income == undefined) data.income = 100000;
+    }
+    return data;
 }
 
 /*
@@ -15,6 +21,13 @@ export function personUpdate(data) {
   Верните список названий этих полей в алфавитном порядке в виде массива строк.
 */
 export function objectFieldsList(obj1, obj2, obj3) {
+    let arr_obj = Object.entries({ ...obj1, ...obj2, ...obj3 });
+    let pol = [];
+    arr_obj.forEach((data) => {
+        pol.push(data[0]);
+    });
+    pol = pol.sort();
+    return pol;
 }
 
 /*
@@ -23,4 +36,17 @@ export function objectFieldsList(obj1, obj2, obj3) {
   Количество клонов - count.
 */
 export function objectClone(obj, count) {
+    let arr = [];
+    for (let i = 0; i < count; i++) {
+        let objs = {};
+        for (let j in obj) {
+            if (typeof obj[j] == 'object') {
+                let dopobj = { ...obj[j] };
+                objs['obj'] = dopobj;
+            } else objs[j] = obj[j];
+            objs.id = i;
+        }
+        arr.push(objs);
+    }
+    return arr;
 }
